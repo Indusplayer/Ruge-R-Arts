@@ -175,14 +175,6 @@ dialog.viewer::backdrop{background:rgba(0,0,0,.6)}
 .v-status{font-family:var(--sans);font-size:.9rem;margin-top:10px}
 .v-actions{display:flex;flex-direction:column;gap:10px;margin-top:24px}
 .v-actions .btn{justify-content:center}
-.v-actions .btn.wall{border-color:var(--ochre);color:var(--ochre)}
-.v-actions .btn.wall:hover{background:rgba(251,191,75,.1)}
-.v-room{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
-.v-room svg{width:100%;height:auto;max-height:calc(100% - 52px);display:block;box-shadow:0 20px 50px -20px rgba(0,0,0,.7)}
-.v-room .note{font-family:var(--sans);font-size:.82rem;color:var(--linen-dim);text-align:center;display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center}
-.v-room .note button{all:unset;cursor:pointer;color:var(--ochre);border-bottom:1px solid currentColor}
-.v-room .note button:focus-visible{outline:2px solid var(--ochre);outline-offset:3px}
-.v-stage.walling .v-nav{display:none}
 .v-close,.v-nav{all:unset;cursor:pointer;position:absolute;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;color:var(--linen);background:rgba(20,29,23,.7)}
 .v-close:focus-visible,.v-nav:focus-visible{outline:2px solid var(--ochre)}
 .v-close{top:14px;right:14px;z-index:2}
@@ -296,7 +288,6 @@ dialog.viewer::backdrop{background:rgba(0,0,0,.6)}
     <div class="v-stage">
       <button class="v-nav prev" type="button" id="v-prev"><span class="visually-hidden" data-i18n="viewer.prev">Previous work</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 5l-7 7 7 7"/></svg></button>
       <img id="v-img" alt="">
-      <div id="v-room" class="v-room" hidden></div>
       <button class="v-nav next" type="button" id="v-next"><span class="visually-hidden" data-i18n="viewer.next">Next work</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
     <div class="v-info">
@@ -494,7 +485,6 @@ const T = {
     "contact.whatsapp":"WhatsApp","contact.email":"Email","contact.instagram":"Instagram",
     "contact.msg":"Hi Felipe! I found your work on RugeR Arts.",
     "footer.rights":"All images are of original works. Please don't reproduce without permission.",
-    "wall.view":"View on a wall","wall.back":"View the painting","wall.next":"Try another sofa","wall.note":"Approximate scale: {size}, next to a sofa about {sofa} m wide.",
     "viewer.prev":"Previous work","viewer.next":"Next work","viewer.close":"Close",
     "open":"View {t}"
   },
@@ -535,7 +525,6 @@ const T = {
     "contact.whatsapp":"WhatsApp","contact.email":"Correo","contact.instagram":"Instagram",
     "contact.msg":"¡Hola Felipe! Encontré tu obra en RugeR Arts.",
     "footer.rights":"Todas las imágenes son de obras originales. No reproducir sin permiso.",
-    "wall.view":"Ver en una pared","wall.back":"Ver la obra","wall.next":"Probar otro sofá","wall.note":"Escala aproximada: {size}, junto a un sofá de unos {sofa} m de ancho.",
     "viewer.prev":"Obra anterior","viewer.next":"Obra siguiente","viewer.close":"Cerrar",
     "open":"Ver {t}"
   }
@@ -643,67 +632,6 @@ window.addEventListener("resize", () => { if (colCount() !== lastCols) renderSal
 function renderAll(){ renderStatic(); renderFilters(); renderSalon(); if (current >= 0 && $("#viewer").open) fillViewer(current); }
 
 /* viewer */
-/* ---------- view on a wall: three sofas, drawn to scale in centimetres ---------- */
-let wallMode = false, sofaShift = 0;
-const SOFAS = [
-  { w:200, h:80, wall:"#ece6d8", draw:(x, f) => {           /* mid-century, mustard */
-      const c="#c79a3c", d="#a67c26", l="#5d3f24";
-      return `<polygon points="${x+12},${f-14} ${x+18},${f-14} ${x+15},${f}" fill="${l}"/><polygon points="${x+182},${f-14} ${x+188},${f-14} ${x+185},${f}" fill="${l}"/>
-      <rect x="${x}" y="${f-80}" width="200" height="50" rx="6" fill="${d}"/>
-      <rect x="${x+8}" y="${f-76}" width="91" height="40" rx="5" fill="${c}"/><rect x="${x+101}" y="${f-76}" width="91" height="40" rx="5" fill="${c}"/>
-      <rect x="${x}" y="${f-38}" width="200" height="24" rx="4" fill="${d}"/>
-      <rect x="${x+10}" y="${f-44}" width="89" height="14" rx="4" fill="${c}"/><rect x="${x+101}" y="${f-44}" width="89" height="14" rx="4" fill="${c}"/>
-      <rect x="${x-2}" y="${f-56}" width="12" height="42" rx="4" fill="${d}"/><rect x="${x+190}" y="${f-56}" width="12" height="42" rx="4" fill="${d}"/>`; } },
-  { w:215, h:76, wall:"#e3e1d6", draw:(x, f) => {           /* chesterfield, oxblood leather */
-      const c="#5c1d20", hi="#76292b", ft="#2a1a12";
-      let tufts=""; for (let r=0;r<2;r++) for (let k=0;k<9;k++) tufts += `<circle cx="${x+30+k*19.4+(r?9.7:0)}" cy="${f-66+r*11}" r="1.1" fill="#3a1012"/>`;
-      return `<circle cx="${x+16}" cy="${f-3}" r="3.5" fill="${ft}"/><circle cx="${x+199}" cy="${f-3}" r="3.5" fill="${ft}"/>
-      <rect x="${x+14}" y="${f-76}" width="187" height="44" rx="8" fill="${c}"/>${tufts}
-      <rect x="${x+4}" y="${f-40}" width="207" height="34" rx="5" fill="${c}"/>
-      <rect x="${x+20}" y="${f-46}" width="175" height="12" rx="4" fill="${hi}"/>
-      <rect x="${x}" y="${f-58}" width="22" height="52" rx="5" fill="${c}"/><circle cx="${x+11}" cy="${f-58}" r="11" fill="${hi}"/>
-      <rect x="${x+193}" y="${f-58}" width="22" height="52" rx="5" fill="${c}"/><circle cx="${x+204}" cy="${f-58}" r="11" fill="${hi}"/>`; } },
-  { w:240, h:66, wall:"#e9e4dc", draw:(x, f) => {           /* modern low, slate blue */
-      const c="#3f4c60", cu="#4d5c74", l="#1b1b1b";
-      return `<rect x="${x+14}" y="${f-8}" width="2" height="8" fill="${l}"/><rect x="${x+224}" y="${f-8}" width="2" height="8" fill="${l}"/>
-      <rect x="${x}" y="${f-30}" width="240" height="22" rx="2" fill="${c}"/>
-      <rect x="${x+18}" y="${f-66}" width="66" height="30" rx="4" fill="${cu}"/><rect x="${x+87}" y="${f-66}" width="66" height="30" rx="4" fill="${cu}"/><rect x="${x+156}" y="${f-66}" width="66" height="30" rx="4" fill="${cu}"/>
-      <rect x="${x+18}" y="${f-40}" width="66" height="11" rx="3" fill="${cu}"/><rect x="${x+87}" y="${f-40}" width="66" height="11" rx="3" fill="${cu}"/><rect x="${x+156}" y="${f-40}" width="66" height="11" rx="3" fill="${cu}"/>
-      <rect x="${x}" y="${f-50}" width="16" height="42" rx="2" fill="${c}"/><rect x="${x+224}" y="${f-50}" width="16" height="42" rx="2" fill="${c}"/>`; } }
-];
-function roomSVG(w, i){
-  const sofa = SOFAS[(i + sofaShift) % SOFAS.length];
-  const W = 380, H = 290, F = 262, cx = W / 2;
-  const [ph, pw] = w.cm;
-  const y = Math.max(14, Math.min(F - 150 - ph / 2, F - sofa.h - 20 - ph));
-  const x = cx - pw / 2;
-  let planks = ""; for (let k = 0; k < W; k += 38) planks += `<line x1="${k}" y1="${F}" x2="${k - 30}" y2="${H}" stroke="rgba(0,0,0,.12)" stroke-width=".6"/>`;
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(w.title)}, ${esc(sizeOf(w))}">
-    <defs><linearGradient id="wl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sofa.wall}" stop-opacity=".88"/><stop offset="1" stop-color="${sofa.wall}"/></linearGradient>
-    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-opacity=".35"/></filter></defs>
-    <rect width="${W}" height="${F}" fill="url(#wl)"/>
-    <rect y="${F}" width="${W}" height="${H - F}" fill="#a77f55"/>${planks}
-    <rect y="${F - 6}" width="${W}" height="6" fill="#f6f3ec"/>
-    <g filter="url(#sh)"><rect x="${x - 1}" y="${y - 1}" width="${pw + 2}" height="${ph + 2}" fill="#c9a24a"/>
-    <image href="images/works/${w.id}.jpg" x="${x}" y="${y}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid slice"/></g>
-    <ellipse cx="${cx}" cy="${F + 2}" rx="${sofa.w / 2 + 8}" ry="4" fill="rgba(0,0,0,.18)"/>
-    ${sofa.draw(cx - sofa.w / 2, F)}
-  </svg>
-  <div class="note"><span>${t("wall.note", { size: sizeOf(w), sofa: num(sofa.w / 100) })}</span><button type="button" id="v-sofa">${t("wall.next")}</button></div>`;
-}
-function renderStage(){
-  const w = WORKS[current], on = wallMode && !!w.cm;
-  $("#v-img").hidden = on;
-  $("#v-room").hidden = !on;
-  document.querySelector(".v-stage").classList.toggle("walling", on);
-  if (on) $("#v-room").innerHTML = roomSVG(w, current);
-}
-document.addEventListener("click", e => {
-  if (e.target.closest("#v-wall")) { wallMode = !wallMode; e.target.closest("#v-wall").textContent = t(wallMode ? "wall.back" : "wall.view"); renderStage(); }
-  if (e.target.closest("#v-sofa")) { sofaShift++; renderStage(); }
-});
-$("#viewer").addEventListener("close", () => { wallMode = false; sofaShift = 0; });
-
 function fillViewer(i){
   current = i;
   const w = WORKS[i];
@@ -727,9 +655,7 @@ function fillViewer(i){
   const a = [];
   if (CONFIG.whatsapp) a.push(`<a class="btn primary" href="https://wa.me/${CONFIG.whatsapp}?text=${text}" target="_blank" rel="noopener">${ICON.whatsapp}${w.status !== "available" ? t("ask.similar") : t("ask.whatsapp")}</a>`);
   if (CONFIG.email) a.push(`<a class="btn${CONFIG.whatsapp ? "" : " primary"}" href="mailto:${CONFIG.email}?subject=${encodeURIComponent("RugeR Arts: " + w.title)}&body=${text}">${ICON.email}${w.status !== "available" ? t("ask.similar") : t("ask.email")}</a>`);
-  if (w.cm) a.push(`<button type="button" class="btn wall" id="v-wall">${t(wallMode ? "wall.back" : "wall.view")}</button>`);
   $("#v-actions").innerHTML = a.join("");
-  renderStage();
 }
 function step(d){
   let list = visible().map(([,i]) => i);
