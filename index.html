@@ -42,7 +42,13 @@ a{color:inherit}
 /* header */
 .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--wall) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid rgba(240,231,204,.08)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
-.top .mark img{height:34px;width:auto}
+.top .mark{display:flex;align-items:center;gap:16px;text-decoration:none;min-width:0}
+.top .mark img{height:34px;width:auto;flex:none}
+.top .who{display:flex;align-items:baseline;gap:12px;padding-left:16px;border-left:1px solid rgba(240,231,204,.22);white-space:nowrap;min-width:0}
+.top .nm{font-family:var(--serif);font-size:1rem;color:var(--linen);font-weight:400}
+.top .role{font-family:var(--sans);font-size:.8rem;color:var(--linen-dim)}
+@media (max-width:1000px){.top .role{display:none}}
+@media (max-width:420px){.top .mark{gap:10px}.top .who{padding-left:10px}.top .nm{font-size:.85rem}}
 .top nav{display:flex;align-items:center;gap:clamp(14px,3vw,32px);font-family:var(--sans);font-size:.9rem}
 .top nav a{text-decoration:none;color:var(--linen-dim)}
 .top nav a:hover{color:var(--linen)}
@@ -113,7 +119,7 @@ h2{font-weight:300;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;margin:0;
 .about .grid > figure{margin:0}
 .about .grid > figure img{width:100%;height:auto}
 .about .grid > figure figcaption{font-family:var(--sans);font-size:.8rem;color:var(--linen-dim);margin-top:10px}
-.about .grid > h2{grid-column:1/-1;margin-bottom:calc(-1 * clamp(8px,2vw,40px))}
+.about .grid > h2{grid-column:1/-1;margin-bottom:0}
 .about .bio{margin-top:0}
 .statement{margin:40px 0 0;padding-left:clamp(18px,2.5vw,28px);border-left:2px solid var(--ochre)}
 .statement .lead{font-style:italic;font-size:clamp(1.35rem,2.4vw,1.8rem);line-height:1.3;color:var(--ochre);max-width:30ch}
@@ -122,22 +128,17 @@ h2{font-weight:300;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;margin:0;
 .about h3{font-family:var(--sans);font-weight:600;font-size:.95rem;margin:44px 0 12px;color:var(--linen)}
 .shows{list-style:none;padding:0;margin:0;font-size:1rem}
 .shows li{display:grid;grid-template-columns:4.2rem 1fr;gap:12px;padding:12px 0;border-top:1px solid rgba(240,231,204,.1)}
-.studio{margin-top:clamp(64px,9vw,110px)}
-.studio h3{font-family:var(--sans);font-weight:600;font-size:.95rem;margin:0 0 18px;color:var(--linen)}
-.collage{display:grid;grid-template-columns:1.05fr 1fr 1fr;grid-template-rows:clamp(200px,24vw,330px) clamp(220px,27vw,380px);gap:clamp(10px,1.4vw,18px)}
-.collage figure{margin:0;position:relative;overflow:hidden;background:#06192b}
-.collage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.collage .c-a{grid-row:1 / 3}
-.collage .c-b{grid-column:2 / 4}
-.collage .c-b img{object-position:50% 88%}
-.collage figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 12px;font-family:var(--sans);font-size:.8rem;line-height:1.4;color:var(--linen);background:linear-gradient(transparent,rgba(5,12,25,.85))}
-@media (max-width:640px){
-  .collage{grid-template-columns:1fr 1fr;grid-template-rows:260px 200px 220px}
-  .collage .c-a{grid-row:1 / 2;grid-column:1 / 2}
-  .collage .c-b{grid-column:1 / 3;grid-row:3 / 4}
-  .collage .c-c{grid-row:1 / 2;grid-column:2 / 3}
-  .collage .c-d{grid-row:2 / 3;grid-column:1 / 3}
-  .collage .c-d img{object-position:50% 30%}
+.about .grid{grid-template-rows:auto auto 1fr;row-gap:clamp(20px,2.4vw,32px)}
+.about .grid > figure{grid-column:1;grid-row:2}
+.about .body{grid-column:2;grid-row:2 / span 2}
+.studio{grid-column:1;grid-row:3;display:flex;flex-direction:column;gap:clamp(12px,1.6vw,20px);align-self:start}
+.studio figure{margin:0}
+.studio img{width:100%;height:auto;display:block}
+.studio figcaption{font-family:var(--sans);font-size:.8rem;color:var(--linen-dim);margin-top:10px}
+@media (max-width:860px){
+  .about .grid{grid-template-rows:none}
+  .about .grid > figure,.about .body,.studio{grid-column:auto;grid-row:auto}
+  .studio{max-width:420px}
 }
 .shows li span{font-family:var(--sans);color:var(--linen-dim);font-size:.88rem;padding-top:.15em}
 .shows em{font-weight:400}
@@ -174,6 +175,14 @@ dialog.viewer::backdrop{background:rgba(0,0,0,.6)}
 .v-status{font-family:var(--sans);font-size:.9rem;margin-top:10px}
 .v-actions{display:flex;flex-direction:column;gap:10px;margin-top:24px}
 .v-actions .btn{justify-content:center}
+.v-actions .btn.wall{border-color:var(--ochre);color:var(--ochre)}
+.v-actions .btn.wall:hover{background:rgba(251,191,75,.1)}
+.v-room{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.v-room svg{width:100%;height:auto;max-height:calc(100% - 52px);display:block;box-shadow:0 20px 50px -20px rgba(0,0,0,.7)}
+.v-room .note{font-family:var(--sans);font-size:.82rem;color:var(--linen-dim);text-align:center;display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center}
+.v-room .note button{all:unset;cursor:pointer;color:var(--ochre);border-bottom:1px solid currentColor}
+.v-room .note button:focus-visible{outline:2px solid var(--ochre);outline-offset:3px}
+.v-stage.walling .v-nav{display:none}
 .v-close,.v-nav{all:unset;cursor:pointer;position:absolute;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;color:var(--linen);background:rgba(20,29,23,.7)}
 .v-close:focus-visible,.v-nav:focus-visible{outline:2px solid var(--ochre)}
 .v-close{top:14px;right:14px;z-index:2}
@@ -194,7 +203,7 @@ dialog.viewer::backdrop{background:rgba(0,0,0,.6)}
 
 <header class="top">
   <div class="wrap">
-    <a class="mark" href="#top" aria-label="RugeR Arts home"><img src="images/logo-gold.png" alt="RugeR Arts" width="1200" height="697"></a>
+    <a class="mark" href="#top" aria-label="RugeR Arts home"><img src="images/logo-gold.png" alt="RugeR Arts" width="1200" height="697"><span class="who"><span class="nm">Juan Felipe Ruge Rodríguez</span><span class="role" data-i18n="header.role">Visual artist</span></span></a>
     <nav aria-label="Main">
       <a class="navlink" href="#works" data-i18n="nav.works">Works</a>
       <a class="navlink" href="#about" data-i18n="nav.about">About</a>
@@ -213,7 +222,7 @@ dialog.viewer::backdrop{background:rgba(0,0,0,.6)}
       <h1 class="visually-hidden">RugeR Arts</h1>
       <img class="sig" src="images/logo-gold.png" alt="RugeR Arts signature" width="1200" height="697">
       <p class="lede" data-i18n="hero.lede">Juan Felipe Ruge R, painter.</p>
-      <p class="invite" data-i18n="hero.invite">Come in and enjoy Exploraciones, my first collection.</p>
+      <p class="invite" data-i18n="hero.invite">Come in and enjoy “Explorations”, my first collection.</p>
       <a class="cta" href="#works" data-i18n="hero.cta">See the works</a>
     </div>
     <div class="hung" id="hero-piece"></div>
@@ -258,14 +267,10 @@ dialog.viewer::backdrop{background:rgba(0,0,0,.6)}
         <h3 data-i18n="about.shows">Exhibitions</h3>
         <ul class="shows" id="shows"></ul>
       </div>
-    </div>
-    <div class="wrap studio">
-      <h3 data-i18n="studio.title">Behind the work</h3>
-      <div class="collage">
-        <figure class="c-a"><img src="images/studio/me-ratzinger.jpg" alt="" width="788" height="1400" loading="lazy"><figcaption data-i18n="studio.ratzinger">With El pensamiento de Joseph at the Congreso Centenario Ratzinger, 2026.</figcaption></figure>
-        <figure class="c-b"><img src="images/studio/painter3.jpg" alt="" width="789" height="596" loading="lazy"><figcaption data-i18n="studio.kookaburra">Painting Kookaburra.</figcaption></figure>
-        <figure class="c-c"><img src="images/studio/painter1.jpg" alt="" width="475" height="633" loading="lazy"></figure>
-        <figure class="c-d"><img src="images/studio/painter2.jpg" alt="" width="768" height="1024" loading="lazy"></figure>
+      <div class="studio">
+        <figure><img src="images/studio/me-ratzinger.jpg" alt="Juan Felipe Ruge beside El pensamiento de Joseph at the Congreso Centenario Ratzinger" width="788" height="793" loading="lazy"><figcaption data-i18n="studio.ratzinger">At the Congreso Centenario Ratzinger.</figcaption></figure>
+        <figure><img src="images/studio/painter3.jpg" alt="Juan Felipe Ruge painting Kookaburra" width="789" height="596" loading="lazy"><figcaption data-i18n="studio.process">Creative process.</figcaption></figure>
+        <figure><img src="images/studio/me-gabo.jpg" alt="Juan Felipe Ruge with the artist Gabo Sierra" width="900" height="904" loading="lazy"><figcaption data-i18n="studio.gabo">With the artist Gabo Sierra.</figcaption></figure>
       </div>
     </div>
   </section>
@@ -291,6 +296,7 @@ dialog.viewer::backdrop{background:rgba(0,0,0,.6)}
     <div class="v-stage">
       <button class="v-nav prev" type="button" id="v-prev"><span class="visually-hidden" data-i18n="viewer.prev">Previous work</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 5l-7 7 7 7"/></svg></button>
       <img id="v-img" alt="">
+      <div id="v-room" class="v-room" hidden></div>
       <button class="v-nav next" type="button" id="v-next"><span class="visually-hidden" data-i18n="viewer.next">Next work</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
     <div class="v-info">
@@ -321,114 +327,118 @@ const CONFIG = {
    EDIT HERE: the works
    status: "available" | "sold" | "reserved" | "notforsale"
    priceUSD: number (e.g. 850) or null for "price on request"
-   size: e.g. "70 × 50 cm"  |  year: e.g. 2025
+   cm: [height, width] in centimetres, e.g. cm:[70,50]  |  year: e.g. 2025
    cats: any of "sacred", "expressionist", "aboriginal", "equestrian", "animals", "realist"
    shows: ids from SHOWS below, for works that were exhibited
    hero:true shows that work in the hero (and leaves it out of the gallery)
    Gallery order: available first, then sold, then not for sale; within each, the order below.
    ===================================================================== */
 const WORKS = [
-  { id:"estocada", title:"Estocada", year:null, medium:"acrylic", size:"", priceUSD:3000, status:"available", w:1444, h:1800, hero:true,
+  { id:"estocada", title:"Estocada", year:null, medium:"acrylic", size:"", cm:[120,80], priceUSD:3000, status:"available", w:1444, h:1800, hero:true,
     cats:["expressionist"], shows:["fragmentos", "penultima"],
     desc:{ en:"A self-portrait in a beret, with an ironic look that nods to French existentialism. One hand holds up the face, carrying the weight of thought. The other grips a sword seen head-on, so the point aims straight at whoever is looking. Thinking too much is a burden, and that same clarity is also a weapon.",
            es:"Un autorretrato con boina y mirada irónica, en referencia al existencialismo francés. Una mano sostiene el propio rostro, cargando el peso de lo que piensa. La otra empuña una espada vista de frente, de modo que la punta apunta directo al espectador. Pensar demasiado es una carga, y esa misma lucidez es también un arma." } },
-  { id:"hands-to-my-head", title:"Hands to My Head", year:null, medium:"acrylic", size:"", priceUSD:null, status:"notforsale", w:1450, h:1800,
+  { id:"hands-to-my-head", title:"Hands to My Head", year:null, medium:"acrylic", size:"", cm:[40,30], priceUSD:null, status:"notforsale", w:1450, h:1800,
     cats:["expressionist"], shows:[],
     desc:{ en:"A face broken into planes of colour, with hands closing in around the head. Several eyes look out from different angles, as if the thought had split the face apart.",
            es:"Un rostro fragmentado en planos de color, con unas manos que se cierran alrededor de la cabeza. Varios ojos miran desde ángulos distintos, como si el pensamiento hubiera partido la cara." } },
-  { id:"hodegetria", title:"Hodegetria", year:null, medium:"acrylic", size:"", priceUSD:null, status:"notforsale", w:1150, h:1600,
+  { id:"hodegetria", title:"Hodegetria", year:null, medium:"acrylic", size:"", cm:[29,21], priceUSD:null, status:"notforsale", w:1150, h:1600,
     cats:["sacred"], shows:["tiemposacro"],
     desc:{ en:"A Virgin in the Byzantine Hodegetria tradition, “she who shows the way”, with a gold halo over a red ground. It keeps the stillness of the icon while letting the brushwork stay loose.",
            es:"Una Virgen en la tradición bizantina de la Hodegetria, «la que muestra el camino», con aureola dorada sobre fondo rojo. Conserva la quietud del ícono y deja la pincelada suelta." } },
-  { id:"lion", title:"Lion", year:null, medium:"acrylic", size:"", priceUSD:500, status:"sold", w:1800, h:1774,
+  { id:"lion", title:"Lion", year:null, medium:"acrylic", size:"", cm:[40,40], priceUSD:500, status:"sold", w:1800, h:1774,
     cats:["animals", "expressionist"], shows:[],
     desc:{ en:"A lion's head built from dragged and dripping paint. The mane breaks apart into orange and rust while the eyes stay sharp and still.",
            es:"La cabeza de un león hecha con pintura arrastrada y chorreada. La melena se deshace en naranjas y óxidos mientras los ojos se mantienen precisos y quietos." } },
-  { id:"enough", title:"Enough", year:null, medium:"acrylic", size:"", priceUSD:3000, status:"available", w:1443, h:1800,
+  { id:"enough", title:"Enough", year:null, medium:"acrylic", size:"", cm:[90,70], priceUSD:3000, status:"available", w:1443, h:1800,
     cats:["expressionist"], shows:["fragmentos"],
     desc:{ en:"A frontal face covered in patterns and hard black outlines, in saturated colour close to stained glass. Every eye in it looks somewhere different.",
            es:"Un rostro frontal cubierto de patrones y contornos negros, en colores saturados cercanos al vitral. Cada uno de sus ojos mira hacia un lugar distinto." } },
-  { id:"san-juanero", title:"San Juanero", year:null, medium:"acrylic", size:"", priceUSD:1000, status:"sold", w:1800, h:1477,
+  { id:"san-juanero", title:"San Juanero", year:null, medium:"acrylic", size:"", cm:[80,100], priceUSD:1000, status:"sold", w:1800, h:1477,
     cats:["realist"], shows:[],
     desc:{ en:"A couple dancing the sanjuanero, the traditional dance of Colombia's Huila region, against dry mountains. He kneels with his hat on the ground while her skirt opens in full colour.",
            es:"Una pareja bailando sanjuanero, el baile tradicional del Huila, frente a montañas secas. Él se arrodilla con el sombrero en el suelo mientras la falda de ella se abre llena de color." } },
-  { id:"cotopaxi", title:"Cotopaxi", year:null, medium:"acrylic", size:"", priceUSD:300, status:"sold", w:1200, h:1496,
+  { id:"cotopaxi", title:"Cotopaxi", year:null, medium:"acrylic", size:"", cm:[29,21], priceUSD:300, status:"sold", w:1200, h:1496,
     cats:["realist"], shows:[],
     desc:{ en:"A figure in a wool poncho seen from behind, facing the snow-capped Cotopaxi volcano in the Ecuadorian Andes.",
            es:"Una figura con ruana vista de espaldas, frente al volcán nevado Cotopaxi en los Andes ecuatorianos." } },
-  { id:"fire", title:"Fire", year:null, medium:"acrylic", size:"", priceUSD:1500, status:"sold", w:1137, h:1600,
+  { id:"fire", title:"Fire", year:null, medium:"acrylic", size:"", cm:[120,90], priceUSD:1500, status:"sold", w:1137, h:1600,
     cats:["expressionist"], shows:[],
     desc:{ en:"Vertical strokes of black, blue and orange around a column of light, reflected below as if on water. Somewhere between a burning forest and a city at night.",
            es:"Pinceladas verticales de negro, azul y naranja alrededor de una columna de luz que se refleja abajo como sobre el agua. Algo entre un bosque en llamas y una ciudad de noche." } },
-  { id:"hope", title:"Hope", year:null, medium:"acrylic", size:"", priceUSD:null, status:"notforsale", w:1357, h:1800,
+  { id:"hope", title:"Hope", year:null, medium:"acrylic", size:"", cm:[61,45.5], priceUSD:null, status:"notforsale", w:1357, h:1800,
     cats:["expressionist"], shows:[],
     desc:{ en:"A child on a red bicycle riding into an explosion of warm colour. The strokes radiate out from the small figure like light.",
            es:"Un niño en una bicicleta roja que avanza hacia una explosión de color cálido. Las pinceladas salen de la pequeña figura como si fueran luz." } },
-  { id:"juan-azul", title:"Juan Azul", year:null, medium:"acrylic", size:"", priceUSD:2000, status:"sold", w:1259, h:1800,
+  { id:"juan-azul", title:"Juan Azul", year:null, medium:"acrylic", size:"", cm:[70,50], priceUSD:2000, status:"sold", w:1259, h:1800,
     cats:["expressionist"], shows:[],
     desc:{ en:"A figure in blues broken into cubist planes, where other faces and forms appear between the shapes.",
            es:"Una figura en azules partida en planos cubistas, donde otros rostros y formas aparecen entre las figuras geométricas." } },
-  { id:"danza", title:"Danza", year:null, medium:"acrylic", size:"", priceUSD:1000, status:"sold", w:1257, h:1800,
+  { id:"danza", title:"Danza", year:null, medium:"acrylic", size:"", cm:[50,40], priceUSD:1000, status:"sold", w:1257, h:1800,
     cats:["realist"], shows:[],
     desc:{ en:"A bullfight seen as a dance. The matador turns the red cape as the bull passes, and the crowd dissolves into the background.",
            es:"Una corrida vista como una danza. El torero gira el capote rojo mientras pasa el toro, y el público se disuelve en el fondo." } },
-  { id:"cheval", title:"Cheval", year:null, medium:"acrylic", size:"", priceUSD:500, status:"sold", w:1422, h:1800,
+  { id:"cheval", title:"Cheval", year:null, medium:"acrylic", size:"", cm:[50,40], priceUSD:500, status:"sold", w:1422, h:1800,
     cats:["equestrian", "animals", "expressionist"], shows:[],
     desc:{ en:"A horse's head and neck in thick, sculpted strokes of ochre, orange and teal.",
            es:"La cabeza y el cuello de un caballo en pinceladas gruesas y esculpidas de ocre, naranja y verde azulado." } },
-  { id:"equestrian-i", title:"Equestrian I", year:null, medium:"acrylic", size:"", priceUSD:1000, status:"sold", w:1436, h:1800,
+  { id:"equestrian-i", title:"Equestrian I", year:null, medium:"acrylic", size:"", cm:[61,45.5], priceUSD:1000, status:"sold", w:1436, h:1800,
     cats:["equestrian", "animals", "realist"], shows:[],
     desc:{ en:"A rider and her horse clearing a show-jumping fence, painted in a realist register. The tension is in the front legs folding over the bar.",
            es:"Una jinete y su caballo saltando un obstáculo, pintados en un registro realista. La tensión está en las patas delanteras que se doblan sobre la barra." } },
-  { id:"horse-i", title:"Horse I", year:null, medium:"acrylic", size:"", priceUSD:500, status:"available", w:1447, h:1800,
+  { id:"horse-i", title:"Horse I", year:null, medium:"acrylic", size:"", cm:[50,40], priceUSD:500, status:"available", w:1447, h:1800,
     cats:["equestrian", "animals"], shows:[],
     desc:{ en:"A white horse standing in a green field, painted in light, broken strokes over a dark background.",
            es:"Un caballo blanco de pie en un potrero verde, pintado con pinceladas claras y quebradas sobre un fondo oscuro." } },
-  { id:"horse-ii", title:"Horse II", year:null, medium:"acrylic", size:"", priceUSD:500, status:"available", w:1417, h:1800,
+  { id:"horse-ii", title:"Horse II", year:null, medium:"acrylic", size:"", cm:[50,40], priceUSD:500, status:"available", w:1417, h:1800,
     cats:["equestrian", "animals"], shows:[],
     desc:{ en:"A brown horse with a white blaze looking straight at the viewer, framed by trees and a warm sky.",
            es:"Un caballo castaño con lucero blanco que mira de frente al espectador, rodeado de árboles y un cielo cálido." } },
-  { id:"proyeccion", title:"Proyección", year:null, medium:"acrylic", size:"", priceUSD:2000, status:"sold", w:1501, h:1800,
+  { id:"proyeccion", title:"Proyección", year:null, medium:"acrylic", size:"", cm:[60,50], priceUSD:2000, status:"sold", w:1501, h:1800,
     cats:["expressionist"], shows:["fragmentos"],
     desc:{ en:"A face built from geometric bands of red, yellow and blue that fold into each other like a labyrinth.",
            es:"Un rostro construido con bandas geométricas de rojo, amarillo y azul que se pliegan unas sobre otras como un laberinto." } },
-  { id:"mantilla", title:"Mantilla", year:null, medium:"acrylic", size:"", priceUSD:500, status:"available", w:1441, h:1800,
+  { id:"mantilla", title:"Mantilla", year:null, medium:"acrylic", size:"", cm:[50,40], priceUSD:500, status:"available", w:1441, h:1800,
     cats:["expressionist"], shows:[],
     desc:{ en:"A tribute to the Santander painter Jorge Mantilla Caballero, after his series Cuando caen las estatuas. The seated figure, eyes closed, looks carved more than painted, a monument coming apart into blocks of colour against a dripping green ground. What was built to stand forever starts to give way.",
            es:"Un homenaje al pintor santandereano Jorge Mantilla Caballero, a partir de su serie Cuando caen las estatuas. La figura sentada, con los ojos cerrados, parece tallada más que pintada. Es un monumento que se deshace en bloques de color sobre un fondo verde chorreado, y lo que se hizo para quedarse de pie empieza a ceder." } },
-  { id:"ratzinger", title:"El pensamiento de Joseph", year:null, medium:"", size:"", priceUSD:3000, status:"sold", w:1335, h:1667,
+  { id:"ratzinger", title:"El pensamiento de Joseph", year:null, medium:"", size:"", cm:[90,70], priceUSD:3000, status:"sold", w:1335, h:1667,
     cats:["sacred", "realist"], shows:["ratzinger2026"],
     desc:{ en:"A black-and-white portrait of Joseph Ratzinger, Pope Benedict XVI, smiling with his chin on his hand and a crucifix behind him. The title points to the theologian more than the pope, a man caught in the middle of a thought.",
            es:"Un retrato en blanco y negro de Joseph Ratzinger, el papa Benedicto XVI, sonriendo con el mentón apoyado en la mano y un crucifijo detrás. El título apunta más al teólogo que al papa, un hombre sorprendido en medio de un pensamiento." } },
-  { id:"pajaractilus", title:"Pajaractilus", year:null, medium:"acrylic", size:"", priceUSD:2000, status:"available", w:1191, h:1512,
+  { id:"pajaractilus", title:"Pajaractilus", year:null, medium:"acrylic", size:"", cm:[50,40], priceUSD:2000, status:"available", w:1191, h:1512,
     cats:["aboriginal", "animals"], shows:[],
     desc:{ en:"Half bird, half pterodactyl, as the title suggests. The body is filled with line and dot patterns against a burning orange halo.",
            es:"Mitad pájaro y mitad pterodáctilo, como sugiere el título. El cuerpo está lleno de líneas y puntos sobre un halo naranja encendido." } },
-  { id:"kookaburra", title:"Kookaburra", year:null, medium:"acrylic", size:"", priceUSD:1000, status:"sold", w:1299, h:1800,
+  { id:"kookaburra", title:"Kookaburra", year:null, medium:"acrylic", size:"", cm:[50,40], priceUSD:1000, status:"sold", w:1299, h:1800,
     cats:["aboriginal", "animals"], shows:[],
     desc:{ en:"A kookaburra in black silhouette with fine white line work on a red ground, inspired by the painting traditions of northern Australia.",
            es:"Un kookaburra en silueta negra con finas líneas blancas sobre fondo rojo, inspirado en las tradiciones pictóricas del norte de Australia." } },
-  { id:"kangaroo1", title:"Kangaroo I", year:null, medium:"acrylic", size:"", priceUSD:1000, status:"sold", w:1024, h:733,
+  { id:"kangaroo1", title:"Kangaroo I", year:null, medium:"acrylic", size:"", cm:[30,40], priceUSD:1000, status:"sold", w:1024, h:733,
     cats:["aboriginal", "animals"], shows:[],
     desc:{ en:"A kangaroo in mid-leap drawn in white lines and dot patterns over deep red, inspired by the painting traditions of northern Australia.",
            es:"Un canguro en pleno salto, dibujado con líneas blancas y puntos sobre un rojo profundo, inspirado en las tradiciones pictóricas del norte de Australia." } },
-  { id:"kangaroo2-3", title:"Kangarú", year:null, medium:"acrylic", size:"", priceUSD:3000, status:"sold", w:1512, h:1200,
+  { id:"kangaroo2-3", title:"Kangarú", year:null, medium:"acrylic", size:"", cm:[56,70], priceUSD:3000, status:"sold", w:1512, h:1200,
     cats:["aboriginal", "animals"], shows:["coniunctio","floridablanca2023"],
     desc:{ en:"A kangaroo in motion filled with dot work and patterned bands over a textured orange ground.",
            es:"Un canguro en movimiento lleno de puntillismo y bandas de patrones sobre un fondo naranja texturizado." } },
-  { id:"tiger1", title:"Tiger I", year:null, medium:"acrylic", size:"", priceUSD:1000, status:"available", w:1024, h:768,
+  { id:"tiger1", title:"Tiger I", year:null, medium:"acrylic", size:"", cm:[30,40], priceUSD:1000, status:"available", w:1024, h:768,
     cats:["animals", "expressionist"], shows:[],
     desc:{ en:"A big cat's head emerging from loose, dripping strokes of ochre and grey-blue.",
            es:"La cabeza de un felino que surge de pinceladas sueltas y chorreadas en ocre y gris azulado." } },
-  { id:"tiger2", title:"Tiger II", year:null, medium:"acrylic", size:"", priceUSD:2000, status:"available", w:979, h:648,
+  { id:"tiger2", title:"Tiger II", year:null, medium:"acrylic", size:"", cm:[65,95], priceUSD:2000, status:"available", w:979, h:648,
     cats:["aboriginal","animals"], shows:[],
     desc:{ en:"A big cat outlined in yellow, its body filled with patterns drawn from Aboriginal painting, against a dotted blue ground.",
            es:"Un felino delineado en amarillo, con el cuerpo lleno de patrones tomados de la pintura aborigen, sobre un fondo azul punteado." } },
-  { id:"still", title:"Still", year:null, medium:"acrylic", size:"", priceUSD:null, status:"available", w:1408, h:1800,
+  { id:"still", title:"Still", year:null, medium:"acrylic", size:"", cm:[30,23], priceUSD:500, status:"available", w:1408, h:1800,
     cats:["animals"], shows:[],
     desc:{ en:"A tiger half submerged in still water among lily pads, with reeds and orange flowers behind it. Only the head breaks the surface, calm and watchful.",
            es:"Un tigre medio sumergido en agua quieta entre hojas de nenúfar, con juncos y flores naranjas detrás. Solo la cabeza rompe la superficie, tranquila y atenta." } },
-  { id:"phanteon", title:"Phanteon", year:null, medium:"acrylic", size:"", priceUSD:1000, status:"sold", w:608, h:445,
+  { id:"toro", title:"Toro", year:null, medium:"acrylic", size:"", cm:[18,13], priceUSD:300, status:"available", w:1129, h:1600,
+    cats:["animals","expressionist"], shows:[],
+    desc:{ en:"A bull charging across the ring, built from thick strokes of ochre and rust against bands of red and deep blue.",
+           es:"Un toro que embiste a través del ruedo, construido con pinceladas gruesas de ocre y óxido sobre franjas de rojo y azul profundo." } },
+  { id:"phanteon", title:"Phanteon", year:null, medium:"acrylic", size:"", cm:[45.5,61], priceUSD:1000, status:"sold", w:608, h:445,
     cats:["expressionist"], shows:[],
     desc:{ en:"An armoured figure crossing a turbulent landscape of blues and golds, somewhere between myth and science fiction.",
            es:"Una figura con armadura que atraviesa un paisaje turbulento de azules y dorados, entre el mito y la ciencia ficción." } }
@@ -450,7 +460,8 @@ const T = {
   en:{
     "nav.works":"Works","nav.about":"About","nav.contact":"Contact",
     "hero.lede":"Juan Felipe Ruge R, painter.",
-    "hero.invite":"Come in and enjoy Exploraciones, my first collection.",
+    "header.role":"Visual artist",
+    "hero.invite":"Come in and enjoy “Explorations”, my first collection.",
     "hero.cta":"See the works",
     "works.title":"Works","works.legend":"Red dot means sold",
     "filter.all":"All","filter.available":"Available","filter.sold":"Sold",
@@ -476,19 +487,22 @@ const T = {
     "about.s4":"What I look for in a painting of mine is that it gives something back to whoever looks at it, a presence that unsettles a little and makes you stay a while longer than planned. When someone stops in front of one of my figures and feels the figure is looking back, the painting is working the way I want it to.”",
     "about.cite":"Interview for the Museo de Bellas Artes de Bucaramanga",
     "about.shows":"Exhibitions",
-    "studio.title":"Behind the work","studio.ratzinger":"With El pensamiento de Joseph at the Congreso Centenario Ratzinger, 2026.","studio.kookaburra":"Painting Kookaburra.",
+    "studio.ratzinger":"At the Congreso Centenario Ratzinger.","studio.process":"Creative process.","studio.gabo":"With the artist Gabo Sierra.",
+    
     "contact.title":"Get in touch",
     "contact.text":"To buy a painting, ask about a commission or arrange a studio visit, write to me directly. I usually reply within a day or two.",
     "contact.whatsapp":"WhatsApp","contact.email":"Email","contact.instagram":"Instagram",
     "contact.msg":"Hi Felipe! I found your work on RugeR Arts.",
     "footer.rights":"All images are of original works. Please don't reproduce without permission.",
+    "wall.view":"View on a wall","wall.back":"View the painting","wall.next":"Try another sofa","wall.note":"Approximate scale: {size}, next to a sofa about {sofa} m wide.",
     "viewer.prev":"Previous work","viewer.next":"Next work","viewer.close":"Close",
     "open":"View {t}"
   },
   es:{
     "nav.works":"Obras","nav.about":"Sobre mí","nav.contact":"Contacto",
     "hero.lede":"Juan Felipe Ruge R, pintor.",
-    "hero.invite":"Te invito a recorrer y disfrutar Exploraciones, mi primera colección.",
+    "header.role":"Artista plástico",
+    "hero.invite":"Te invito a recorrer y disfrutar “Exploraciones”, mi primera colección.",
     "hero.cta":"Ver las obras",
     "works.title":"Obras","works.legend":"Punto rojo significa vendida",
     "filter.all":"Todas","filter.available":"Disponibles","filter.sold":"Vendidas",
@@ -514,12 +528,14 @@ const T = {
     "about.s4":"Lo que busco en un cuadro mío es que devuelva algo al que lo mira, una presencia que incomode un poco y que obligue a quedarse un rato más de lo previsto. Cuando alguien se detiene frente a una de mis figuras y siente que la figura también lo mira, el cuadro está funcionando como me interesa.”",
     "about.cite":"Entrevista para el Museo de Bellas Artes de Bucaramanga",
     "about.shows":"Exposiciones",
-    "studio.title":"Detrás de la obra","studio.ratzinger":"Con El pensamiento de Joseph en el Congreso Centenario Ratzinger, 2026.","studio.kookaburra":"Pintando Kookaburra.",
+    "studio.ratzinger":"En el Congreso Centenario Ratzinger.","studio.process":"Proceso creativo.","studio.gabo":"Con el artista Gabo Sierra.",
+    
     "contact.title":"Contacto",
     "contact.text":"Para comprar una obra, preguntar por un encargo o visitar el taller, escríbeme directamente. Suelo responder en uno o dos días.",
     "contact.whatsapp":"WhatsApp","contact.email":"Correo","contact.instagram":"Instagram",
     "contact.msg":"¡Hola Felipe! Encontré tu obra en RugeR Arts.",
     "footer.rights":"Todas las imágenes son de obras originales. No reproducir sin permiso.",
+    "wall.view":"Ver en una pared","wall.back":"Ver la obra","wall.next":"Probar otro sofá","wall.note":"Escala aproximada: {size}, junto a un sofá de unos {sofa} m de ancho.",
     "viewer.prev":"Obra anterior","viewer.next":"Obra siguiente","viewer.close":"Cerrar",
     "open":"Ver {t}"
   }
@@ -540,6 +556,8 @@ const loc = v => (v && typeof v === "object") ? (v[lang] ?? v.en) : v;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const usd = n => "US$ " + n.toLocaleString("en-US");
 const cop = n => (Math.round(n * copRate / 10000) * 10000).toLocaleString("es-CO");
+const num = n => lang === "es" ? String(n).replace(".", ",") : String(n);
+const sizeOf = w => w.cm ? `${num(w.cm[0])} × ${num(w.cm[1])} cm` : (w.size || "");
 const mediumOf = w => w.medium ? (T[lang]["medium." + w.medium] ? t("medium." + w.medium) : w.medium) : "";
 
 function dotFor(s){ return s === "sold" ? '<span class="dot" aria-hidden="true"></span>' : s === "reserved" ? '<span class="dot half" aria-hidden="true"></span>' : ""; }
@@ -549,7 +567,7 @@ function priceLine(w){
   return w.priceUSD ? usd(w.priceUSD) : t("price.request");
 }
 function labelHTML(w){
-  const meta = [mediumOf(w), w.size].filter(Boolean).join(", ");
+  const meta = [mediumOf(w), sizeOf(w)].filter(Boolean).join(", ");
   return `<div class="label"><div class="t">${esc(w.title)}${w.year ? `<span class="y">, ${w.year}</span>` : ""}</div>${meta ? `<div>${esc(meta)}</div>` : ""}<div class="price">${priceLine(w)}</div></div>`;
 }
 
@@ -625,13 +643,74 @@ window.addEventListener("resize", () => { if (colCount() !== lastCols) renderSal
 function renderAll(){ renderStatic(); renderFilters(); renderSalon(); if (current >= 0 && $("#viewer").open) fillViewer(current); }
 
 /* viewer */
+/* ---------- view on a wall: three sofas, drawn to scale in centimetres ---------- */
+let wallMode = false, sofaShift = 0;
+const SOFAS = [
+  { w:200, h:80, wall:"#ece6d8", draw:(x, f) => {           /* mid-century, mustard */
+      const c="#c79a3c", d="#a67c26", l="#5d3f24";
+      return `<polygon points="${x+12},${f-14} ${x+18},${f-14} ${x+15},${f}" fill="${l}"/><polygon points="${x+182},${f-14} ${x+188},${f-14} ${x+185},${f}" fill="${l}"/>
+      <rect x="${x}" y="${f-80}" width="200" height="50" rx="6" fill="${d}"/>
+      <rect x="${x+8}" y="${f-76}" width="91" height="40" rx="5" fill="${c}"/><rect x="${x+101}" y="${f-76}" width="91" height="40" rx="5" fill="${c}"/>
+      <rect x="${x}" y="${f-38}" width="200" height="24" rx="4" fill="${d}"/>
+      <rect x="${x+10}" y="${f-44}" width="89" height="14" rx="4" fill="${c}"/><rect x="${x+101}" y="${f-44}" width="89" height="14" rx="4" fill="${c}"/>
+      <rect x="${x-2}" y="${f-56}" width="12" height="42" rx="4" fill="${d}"/><rect x="${x+190}" y="${f-56}" width="12" height="42" rx="4" fill="${d}"/>`; } },
+  { w:215, h:76, wall:"#e3e1d6", draw:(x, f) => {           /* chesterfield, oxblood leather */
+      const c="#5c1d20", hi="#76292b", ft="#2a1a12";
+      let tufts=""; for (let r=0;r<2;r++) for (let k=0;k<9;k++) tufts += `<circle cx="${x+30+k*19.4+(r?9.7:0)}" cy="${f-66+r*11}" r="1.1" fill="#3a1012"/>`;
+      return `<circle cx="${x+16}" cy="${f-3}" r="3.5" fill="${ft}"/><circle cx="${x+199}" cy="${f-3}" r="3.5" fill="${ft}"/>
+      <rect x="${x+14}" y="${f-76}" width="187" height="44" rx="8" fill="${c}"/>${tufts}
+      <rect x="${x+4}" y="${f-40}" width="207" height="34" rx="5" fill="${c}"/>
+      <rect x="${x+20}" y="${f-46}" width="175" height="12" rx="4" fill="${hi}"/>
+      <rect x="${x}" y="${f-58}" width="22" height="52" rx="5" fill="${c}"/><circle cx="${x+11}" cy="${f-58}" r="11" fill="${hi}"/>
+      <rect x="${x+193}" y="${f-58}" width="22" height="52" rx="5" fill="${c}"/><circle cx="${x+204}" cy="${f-58}" r="11" fill="${hi}"/>`; } },
+  { w:240, h:66, wall:"#e9e4dc", draw:(x, f) => {           /* modern low, slate blue */
+      const c="#3f4c60", cu="#4d5c74", l="#1b1b1b";
+      return `<rect x="${x+14}" y="${f-8}" width="2" height="8" fill="${l}"/><rect x="${x+224}" y="${f-8}" width="2" height="8" fill="${l}"/>
+      <rect x="${x}" y="${f-30}" width="240" height="22" rx="2" fill="${c}"/>
+      <rect x="${x+18}" y="${f-66}" width="66" height="30" rx="4" fill="${cu}"/><rect x="${x+87}" y="${f-66}" width="66" height="30" rx="4" fill="${cu}"/><rect x="${x+156}" y="${f-66}" width="66" height="30" rx="4" fill="${cu}"/>
+      <rect x="${x+18}" y="${f-40}" width="66" height="11" rx="3" fill="${cu}"/><rect x="${x+87}" y="${f-40}" width="66" height="11" rx="3" fill="${cu}"/><rect x="${x+156}" y="${f-40}" width="66" height="11" rx="3" fill="${cu}"/>
+      <rect x="${x}" y="${f-50}" width="16" height="42" rx="2" fill="${c}"/><rect x="${x+224}" y="${f-50}" width="16" height="42" rx="2" fill="${c}"/>`; } }
+];
+function roomSVG(w, i){
+  const sofa = SOFAS[(i + sofaShift) % SOFAS.length];
+  const W = 380, H = 290, F = 262, cx = W / 2;
+  const [ph, pw] = w.cm;
+  const y = Math.max(14, Math.min(F - 150 - ph / 2, F - sofa.h - 20 - ph));
+  const x = cx - pw / 2;
+  let planks = ""; for (let k = 0; k < W; k += 38) planks += `<line x1="${k}" y1="${F}" x2="${k - 30}" y2="${H}" stroke="rgba(0,0,0,.12)" stroke-width=".6"/>`;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(w.title)}, ${esc(sizeOf(w))}">
+    <defs><linearGradient id="wl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sofa.wall}" stop-opacity=".88"/><stop offset="1" stop-color="${sofa.wall}"/></linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-opacity=".35"/></filter></defs>
+    <rect width="${W}" height="${F}" fill="url(#wl)"/>
+    <rect y="${F}" width="${W}" height="${H - F}" fill="#a77f55"/>${planks}
+    <rect y="${F - 6}" width="${W}" height="6" fill="#f6f3ec"/>
+    <g filter="url(#sh)"><rect x="${x - 1}" y="${y - 1}" width="${pw + 2}" height="${ph + 2}" fill="#c9a24a"/>
+    <image href="images/works/${w.id}.jpg" x="${x}" y="${y}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid slice"/></g>
+    <ellipse cx="${cx}" cy="${F + 2}" rx="${sofa.w / 2 + 8}" ry="4" fill="rgba(0,0,0,.18)"/>
+    ${sofa.draw(cx - sofa.w / 2, F)}
+  </svg>
+  <div class="note"><span>${t("wall.note", { size: sizeOf(w), sofa: num(sofa.w / 100) })}</span><button type="button" id="v-sofa">${t("wall.next")}</button></div>`;
+}
+function renderStage(){
+  const w = WORKS[current], on = wallMode && !!w.cm;
+  $("#v-img").hidden = on;
+  $("#v-room").hidden = !on;
+  document.querySelector(".v-stage").classList.toggle("walling", on);
+  if (on) $("#v-room").innerHTML = roomSVG(w, current);
+}
+document.addEventListener("click", e => {
+  if (e.target.closest("#v-wall")) { wallMode = !wallMode; e.target.closest("#v-wall").textContent = t(wallMode ? "wall.back" : "wall.view"); renderStage(); }
+  if (e.target.closest("#v-sofa")) { sofaShift++; renderStage(); }
+});
+$("#viewer").addEventListener("close", () => { wallMode = false; sofaShift = 0; });
+
 function fillViewer(i){
   current = i;
   const w = WORKS[i];
   const img = $("#v-img");
   img.src = `images/works/${w.id}.jpg`; img.alt = w.title;
   $("#v-title").textContent = w.title;
-  $("#v-meta").textContent = [w.year, mediumOf(w), w.size].filter(Boolean).join(", ");
+  $("#v-meta").textContent = [w.year, mediumOf(w), sizeOf(w)].filter(Boolean).join(", ");
   const shows = (w.shows || []).map(id => SHOWS.find(x => x.id === id)).filter(Boolean);
   $("#v-desc").innerHTML = (w.desc ? `<p>${esc(loc(w.desc))}</p>` : "") +
     shows.map(x => `<div class="v-shows"><strong>${t("exhibited")}:</strong> ${esc(loc(x.title))}, ${esc(loc(x.place)).split(".")[0]} (${x.year})</div>`).join("");
@@ -648,7 +727,9 @@ function fillViewer(i){
   const a = [];
   if (CONFIG.whatsapp) a.push(`<a class="btn primary" href="https://wa.me/${CONFIG.whatsapp}?text=${text}" target="_blank" rel="noopener">${ICON.whatsapp}${w.status !== "available" ? t("ask.similar") : t("ask.whatsapp")}</a>`);
   if (CONFIG.email) a.push(`<a class="btn${CONFIG.whatsapp ? "" : " primary"}" href="mailto:${CONFIG.email}?subject=${encodeURIComponent("RugeR Arts: " + w.title)}&body=${text}">${ICON.email}${w.status !== "available" ? t("ask.similar") : t("ask.email")}</a>`);
+  if (w.cm) a.push(`<button type="button" class="btn wall" id="v-wall">${t(wallMode ? "wall.back" : "wall.view")}</button>`);
   $("#v-actions").innerHTML = a.join("");
+  renderStage();
 }
 function step(d){
   let list = visible().map(([,i]) => i);
